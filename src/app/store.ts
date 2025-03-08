@@ -14,15 +14,27 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-const persistConfig = {
-  key: "root",
+const dashboardPersistConfig = {
+  key: "dashboard",
   version: 1,
   storage,
 };
 
-const persistedDashboardReducer = persistReducer(persistConfig, dashboardReducer);
-const persistedCardReducer = persistReducer(persistConfig, cardReducer);
-const persistedUserReducer = persistReducer(persistConfig, userReducer);
+const cardPersistConfig = {
+  key: "card",
+  version: 1,
+  storage,
+};
+
+const userPersistConfig = {
+  key: "user",
+  version: 1,
+  storage,
+};
+
+const persistedDashboardReducer = persistReducer(dashboardPersistConfig, dashboardReducer);
+const persistedCardReducer = persistReducer(cardPersistConfig, cardReducer);
+const persistedUserReducer = persistReducer(userPersistConfig, userReducer);
 
 export const store = configureStore({
   reducer: {

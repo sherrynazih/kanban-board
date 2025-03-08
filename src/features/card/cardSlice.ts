@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { ColumnsStatus } from "../../components/contexts/ColumnsStatuses";
 
 export interface Card {
@@ -23,11 +23,7 @@ const initialState: Card = {
 export const cardSlice = createSlice({
   name: "card",
   initialState: initialState,
-  reducers: {
-    editCard: (state, action: PayloadAction<Card>) => {
-      state = action.payload;
-    },
-  },
+  reducers: {},
 });
 
 export const reducers = cardSlice.actions;

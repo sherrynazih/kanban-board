@@ -68,7 +68,7 @@ const StatusFullColumn: React.FC<StatusFullColumnProps> = ({ status }) => {
       </div>
 
       {/* Virtualized List */}
-      <List height={500} itemCount={filteredCardByStatus.length} itemSize={200} width="100%">
+      <List height={500} itemCount={filteredCardByStatus.length} itemSize={205} width="100%">
         {Row}
       </List>
     </div>

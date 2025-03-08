@@ -4,6 +4,7 @@
   padding: 20px;
   height: 75vh;
   background: #f8fafc;
+  overflow: auto;
 }
 
 .column-header-container {
