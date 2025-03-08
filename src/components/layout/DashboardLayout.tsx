@@ -105,7 +105,7 @@ export default function DashboardLayoutBasic() {
         <PageContainer title="Kanban Board">
           <Grid container spacing={3}>
             {statuses?.columnsStatuses.map((s, si) => (
-              <Grid size={4} key={`column-status-${si}`}>
+              <Grid size={{ xs: 12, sm: 12, md: 6, lg: 4 }} key={`column-status-${si}`}>
                 <StatusFullColumn status={s} />
               </Grid>
             ))}
