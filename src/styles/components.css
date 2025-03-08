@@ -22,6 +22,13 @@
   min-width: unset;
 }
 
+.delete-card-icon.MuiButtonBase-root {
+  position: absolute;
+  right: 0;
+  top: 10px;
+  color: red;
+}
+
 .card-container {
   border: 1px solid #e2e8f0;
   border-radius: 24px;
@@ -58,6 +65,8 @@
   align-items: center;
   gap: 8px;
   margin: 15px 0;
+  position: absolute;
+  bottom: 10px;
 }
 
 .status-color {
@@ -85,4 +94,13 @@
 .assignedto-container .MuiFormLabel-root {
   top: unset;
   bottom: 24px;
+}
+
+.form-container {
+  display: block !important;
+  width: 100%;
+}
+
+.MuiDialog-paper {
+  width: 500px;
 }

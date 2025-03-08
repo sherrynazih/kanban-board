@@ -17,8 +17,14 @@ export const dashboardSlice = createSlice({
     addCard: (state, action: PayloadAction<Card>) => {
       state.cards.push(action.payload);
     },
-    deleteCard: (state, action: PayloadAction<Card>) => {
-      state.cards.filter((c) => c.id !== action.payload.id);
+    deleteCard: (state, action: PayloadAction<{ id: number }>) => {
+      state.cards = state.cards.filter((c) => c.id !== action.payload.id);
+    },
+    editCard: (state, action: PayloadAction<Card>) => {
+      let card = state.cards.find((c) => c.id === action.payload.id);
+      if (card) {
+        card = action.payload;
+      }
     },
     updateCardUser: (state, action: PayloadAction<{ id: number; newUser: string }>) => {
       const card = state.cards.find((c) => c.id === action.payload.id);

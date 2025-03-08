@@ -1,19 +1,19 @@
 import Status from "../layout/Status";
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { Button, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import React from "react";
 import { Card } from "../../features/card/cardSlice";
 import { useDrag } from "react-dnd";
 import { useDispatch } from "react-redux";
-import { reducers as dashboardReducers } from "../../features/dashboard/dashboardSlice";
+import { reducers as dashboardReducers, reducers } from "../../features/dashboard/dashboardSlice";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 interface CardProps {
   card: Card;
+  usersOptions: string[];
 }
 
-const ItemCard: React.FC<CardProps> = ({ card }) => {
+const ItemCard: React.FC<CardProps> = ({ card, usersOptions }) => {
   const dispatch = useDispatch();
-
-  const usersOptions = ["Sherry Nazih", "John Tadros"];
 
   const [value, setValue] = React.useState<string | "">(card.assignedTo ?? "");
 
@@ -26,6 +26,7 @@ const ItemCard: React.FC<CardProps> = ({ card }) => {
   }));
 
   const handleChange = (e: any) => {
+    e.stopPropagation();
     setValue(e.target.value);
   };
 
@@ -47,10 +48,23 @@ const ItemCard: React.FC<CardProps> = ({ card }) => {
 
   return (
     <div ref={dragRef} className="card-container" style={{ opacity: isDragging ? 0.5 : 1 }}>
+      <Button
+        className="delete-card-icon"
+        onClick={(e: any) => {
+          e.stopPropagation();
+          dispatch(
+            reducers.deleteCard({
+              id: card.id,
+            })
+          );
+        }}
+      >
+        <DeleteIcon />
+      </Button>
       <div className="card-title">{card.title}</div>
       <div className="card-description">{card.description.slice(0, 60) + "..."}</div>
       <Status name={card.status.name} color={card.status.color} />
-      <div className="assignedto-container">
+      <div className="assignedto-container" onClick={(e) => e.stopPropagation()}>
         <FormControl sx={{ minWidth: 140 }}>
           <InputLabel id="user-card-selection">Assigned To</InputLabel>
           <Select

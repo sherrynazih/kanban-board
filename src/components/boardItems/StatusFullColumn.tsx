@@ -8,6 +8,8 @@ import { ColumnsStatus } from "../contexts/ColumnsStatuses";
 import { FixedSizeList as List, ListChildComponentProps } from "react-window";
 import { useDrop } from "react-dnd";
 import React from "react";
+import CardForm from "./CardForm";
+import { Card } from "../../features/card/cardSlice";
 
 interface StatusFullColumnProps {
   status: ColumnsStatus;
@@ -16,14 +18,17 @@ interface StatusFullColumnProps {
 const StatusFullColumn: React.FC<StatusFullColumnProps> = ({ status }) => {
   const dashboardCards = useSelector((state: RootState) => state.dashboard.cards);
   const dispatch = useDispatch();
+  const [openCard, setOpenCard] = React.useState<boolean>(false);
+  const [selectedCard, setSelectedCard] = React.useState<Card | null>(null);
+  const usersOptions = ["Sherry Nazih", "John Tadros"];
 
   const filteredCardByStatus = dashboardCards?.filter((c) => c.status.name === status.name);
 
   const Row: React.FC<ListChildComponentProps> = ({ index, style }) => {
     const card = filteredCardByStatus[index];
     return (
-      <div style={style}>
-        <ItemCard card={card} />
+      <div style={style} onClick={() => handleClickOpenCard(card)}>
+        <ItemCard card={card} usersOptions={usersOptions} />
       </div>
     );
   };
@@ -42,29 +47,31 @@ const StatusFullColumn: React.FC<StatusFullColumnProps> = ({ status }) => {
 
   drop(dropRef);
 
+  const handleClickOpenCard = (card: Card | null) => {
+    setSelectedCard(card);
+    setOpenCard(true);
+  };
+
+  const handleCloseCard = () => {
+    setSelectedCard(null);
+    setOpenCard(false);
+  };
+
   return (
     <div ref={dropRef} className="column-container">
       <div className="column-header-container">
         <h4>{status.name}</h4>
-        <Button
-          className="add-card-icon"
-          onClick={() =>
-            dispatch(
-              reducers.addCard({
-                id: new Date().getTime(),
-                title: "test",
-                description: "test desc",
-                assignedTo: "Sherry Nazih",
-                status: {
-                  name: status.name,
-                  color: status.color,
-                },
-              })
-            )
-          }
-        >
+        <Button className="add-card-icon" onClick={() => handleClickOpenCard(null)}>
           <ControlPointIcon />
         </Button>
+
+        <CardForm
+          open={openCard}
+          handleCloseCard={handleCloseCard}
+          status={status}
+          usersOptions={usersOptions}
+          selectedCard={selectedCard}
+        />
       </div>
 
       {/* Virtualized List */}
