@@ -21,9 +21,9 @@ export const dashboardSlice = createSlice({
       state.cards = state.cards.filter((c) => c.id !== action.payload.id);
     },
     editCard: (state, action: PayloadAction<Card>) => {
-      let card = state.cards.find((c) => c.id === action.payload.id);
-      if (card) {
-        card = action.payload;
+      const index = state.cards.findIndex((card) => card.id === action.payload.id);
+      if (index !== -1) {
+        state.cards[index] = { ...state.cards[index], ...action.payload };
       }
     },
     updateCardUser: (state, action: PayloadAction<{ id: number; newUser: string }>) => {

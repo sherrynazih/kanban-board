@@ -20,7 +20,18 @@ const StatusFullColumn: React.FC<StatusFullColumnProps> = ({ status }) => {
   const dispatch = useDispatch();
   const [openCard, setOpenCard] = React.useState<boolean>(false);
   const [selectedCard, setSelectedCard] = React.useState<Card | null>(null);
-  const usersOptions = ["Sherry Nazih", "John Tadros"];
+  const usersOptions = [
+    "John Doe",
+    "Jane Smith",
+    "Michael Johnson",
+    "Emily Davis",
+    "David Brown",
+    "Sophia Wilson",
+    "James Taylor",
+    "Olivia Anderson",
+    "William Thomas",
+    "Isabella Martinez",
+  ];
 
   const filteredCardByStatus = dashboardCards?.filter((c) => c.status.name === status.name);
 
