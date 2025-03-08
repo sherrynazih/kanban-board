@@ -6,6 +6,8 @@ import { reducers } from "../../features/dashboard/dashboardSlice";
 import { Button } from "@mui/material";
 import { ColumnsStatus } from "../contexts/ColumnsStatuses";
 import { FixedSizeList as List, ListChildComponentProps } from "react-window";
+import { useDrop } from "react-dnd";
+import React from "react";
 
 interface StatusFullColumnProps {
   status: ColumnsStatus;
@@ -26,8 +28,22 @@ const StatusFullColumn: React.FC<StatusFullColumnProps> = ({ status }) => {
     );
   };
 
+  const [_, drop] = useDrop(() => ({
+    accept: "CARD",
+    drop: (draggedCard: { id: number; status: ColumnsStatus }) => {
+      dispatch(reducers.updateCardStatus({ id: draggedCard.id, newStatus: status }));
+    },
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+    }),
+  }));
+
+  const dropRef = React.useRef<HTMLDivElement>(null);
+
+  drop(dropRef);
+
   return (
-    <div className="column-container">
+    <div ref={dropRef} className="column-container">
       <div className="column-header-container">
         <h4>{status.name}</h4>
         <Button
