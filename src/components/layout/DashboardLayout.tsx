@@ -1,5 +1,5 @@
 import * as React from "react";
-import { extendTheme, styled } from "@mui/material/styles";
+import { extendTheme } from "@mui/material/styles";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import { AppProvider, Navigation, Router } from "@toolpad/core/AppProvider";
@@ -9,6 +9,8 @@ import Grid from "@mui/material/Grid2";
 import HelpIcon from "@mui/icons-material/Help";
 import SettingsIcon from "@mui/icons-material/Settings";
 import PeopleIcon from "@mui/icons-material/People";
+import StatusFullColumn from "../boardItems/StatusFullColumn";
+import { ColumnsStatusesContext } from "../contexts/ColumnsStatuses";
 
 const NAVIGATION: Navigation = [
   {
@@ -73,21 +75,21 @@ function useDemoRouter(initialPath: string): Router {
   return router;
 }
 
-const Skeleton = styled("div")<{ height: number }>(({ theme, height }) => ({
-  backgroundColor: theme.palette.action.hover,
-  borderRadius: theme.shape.borderRadius,
-  height,
-  content: '" "',
-}));
-
 export default function DashboardLayoutBasic() {
   const router = useDemoRouter("/dashboard");
+
+  const statuses = React.useContext(ColumnsStatusesContext);
 
   return (
     <AppProvider
       navigation={NAVIGATION}
       branding={{
-        logo: <img src="https://www.rescounts.com/static/media/logo%20gray.39ad533e10c97f72154a.png" alt="Rescounts logo" />,
+        logo: (
+          <img
+            src="https://www.rescounts.com/static/media/logo%20gray.39ad533e10c97f72154a.png"
+            alt="Rescounts logo"
+          />
+        ),
         title: "",
         homeUrl: "/",
       }}
@@ -96,41 +98,13 @@ export default function DashboardLayoutBasic() {
     >
       <DashboardLayout>
         <PageContainer title="Kanban Board">
-          {/* <Grid container spacing={1}>
-            <Grid size={5} />
-            <Grid size={12}>
-              <Skeleton height={14} />
-            </Grid>
-            <Grid size={12}>
-              <Skeleton height={14} />
-            </Grid>
-            <Grid size={4}>
-              <Skeleton height={100} />
-            </Grid>
-            <Grid size={8}>
-              <Skeleton height={100} />
-            </Grid>
-
-            <Grid size={12}>
-              <Skeleton height={150} />
-            </Grid>
-            <Grid size={12}>
-              <Skeleton height={14} />
-            </Grid>
-
-            <Grid size={3}>
-              <Skeleton height={100} />
-            </Grid>
-            <Grid size={3}>
-              <Skeleton height={100} />
-            </Grid>
-            <Grid size={3}>
-              <Skeleton height={100} />
-            </Grid>
-            <Grid size={3}>
-              <Skeleton height={100} />
-            </Grid>
-          </Grid> */}
+          <Grid container spacing={3}>
+            {statuses?.columnsStatuses.map((s, si) => (
+              <Grid size={4} key={`column-status-${si}`}>
+                <StatusFullColumn status={s} />
+              </Grid>
+            ))}
+          </Grid>
         </PageContainer>
       </DashboardLayout>
     </AppProvider>
