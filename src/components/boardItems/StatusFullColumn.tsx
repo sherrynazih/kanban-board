@@ -10,6 +10,7 @@ import { useDrop } from "react-dnd";
 import React from "react";
 import CardForm from "./CardForm";
 import { Card } from "../../features/card/cardSlice";
+import { useTheme } from "@mui/material/styles";
 
 interface StatusFullColumnProps {
   status: ColumnsStatus;
@@ -18,6 +19,7 @@ interface StatusFullColumnProps {
 const StatusFullColumn: React.FC<StatusFullColumnProps> = ({ status }) => {
   const dashboardCards = useSelector((state: RootState) => state.dashboard.cards);
   const dispatch = useDispatch();
+  const theme = useTheme();
   const [openCard, setOpenCard] = React.useState<boolean>(false);
   const [selectedCard, setSelectedCard] = React.useState<Card | null>(null);
   const usersOptions = [
@@ -69,9 +71,15 @@ const StatusFullColumn: React.FC<StatusFullColumnProps> = ({ status }) => {
   };
 
   return (
-    <div ref={dropRef} className="column-container">
+    <div
+      style={theme.palette.mode === "dark" ? { filter: "invert(1)" } : { filter: "" }}
+      ref={dropRef}
+      className="column-container"
+    >
       <div className="column-header-container">
-        <h4>{status.name}</h4>
+        <h4 style={theme.palette.mode === "dark" ? { filter: "invert(1)" } : { filter: "" }}>
+          {status.name}
+        </h4>
         <Button className="add-card-icon" onClick={() => handleClickOpenCard(null)}>
           <ControlPointIcon />
         </Button>

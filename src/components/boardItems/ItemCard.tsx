@@ -6,6 +6,7 @@ import { useDrag } from "react-dnd";
 import { useDispatch } from "react-redux";
 import { reducers as dashboardReducers, reducers } from "../../features/dashboard/dashboardSlice";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useTheme } from "@mui/material/styles";
 
 interface CardProps {
   card: Card;
@@ -14,6 +15,7 @@ interface CardProps {
 
 const ItemCard: React.FC<CardProps> = ({ card, usersOptions }) => {
   const dispatch = useDispatch();
+  const theme = useTheme();
 
   const [value, setValue] = React.useState<string | "">(card.assignedTo ?? "");
 
@@ -64,7 +66,11 @@ const ItemCard: React.FC<CardProps> = ({ card, usersOptions }) => {
       <div className="card-title">{card.title}</div>
       <div className="card-description">{card.description.slice(0, 60) + "..."}</div>
       <Status name={card.status.name} color={card.status.color} />
-      <div className="assignedto-container" onClick={(e) => e.stopPropagation()}>
+      <div
+        style={theme.palette.mode === "dark" ? { filter: "invert(1)" } : { filter: "" }}
+        className="assignedto-container"
+        onClick={(e) => e.stopPropagation()}
+      >
         <FormControl sx={{ minWidth: 140 }}>
           <InputLabel id="user-card-selection">Assigned To</InputLabel>
           <Select

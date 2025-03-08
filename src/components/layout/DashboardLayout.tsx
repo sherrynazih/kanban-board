@@ -11,6 +11,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import PeopleIcon from "@mui/icons-material/People";
 import StatusFullColumn from "../boardItems/StatusFullColumn";
 import { ColumnsStatusesContext } from "../contexts/ColumnsStatuses";
+import { useTheme } from "@mui/material/styles";
 
 const NAVIGATION: Navigation = [
   {
@@ -77,6 +78,10 @@ function useDemoRouter(initialPath: string): Router {
 
 export default function DashboardLayoutBasic() {
   const router = useDemoRouter("/dashboard");
+
+  const theme = useTheme();
+
+  console.info("theme", theme);
 
   const statuses = React.useContext(ColumnsStatusesContext);
 
