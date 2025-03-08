@@ -1,5 +1,3 @@
-// import { useSelector } from "react-redux";
-// import { RootState } from "../../app/store";
 import Status from "../layout/Status";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import React from "react";
@@ -10,11 +8,6 @@ interface CardProps {
 }
 
 const ItemCard: React.FC<CardProps> = ({ card }) => {
-  const textttt =
-    "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Exercitationem aliquid nesciunt praesentium consequuntur tempore ipsa pariatur voluptate nisi. Odit voluptatem exercitationem nulla quasi eius ratione? Sed velit alias dignissimos accusantium.";
-
-  // const card = useSelector((state: RootState) => state.card);
-
   const usersOptions = ["Sherry Nazih", "John Tadros"];
 
   const [value, setValue] = React.useState<string | "">("");
@@ -35,9 +28,9 @@ const ItemCard: React.FC<CardProps> = ({ card }) => {
             MenuProps={{
               sx: {
                 "& .MuiPaper-root": {
-                  minWidth: "120px", // Ensures it matches the select input
-                  width: "auto", // Makes it dynamically adjust
-                  mt: 1, // Pushes the dropdown below the select input
+                  minWidth: "120px", //matches the input
+                  width: "auto",
+                  mt: 1,
                 },
               },
             }}
