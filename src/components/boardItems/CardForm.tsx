@@ -22,7 +22,7 @@ interface CardFormProps {
   handleCloseCard: () => void;
   status: ColumnsStatus;
   usersOptions: string[];
-  selectedCard: Card | null;
+  selectedCard: Card | null; //Card in case an existing card is selected, null in case new card will be created.
 }
 
 interface CardFormik {
@@ -31,6 +31,7 @@ interface CardFormik {
   user: string;
 }
 
+// Formik validation Schema
 const CardSchema = Yup.object().shape({
   title: Yup.string().required("Field is Required"),
 });
@@ -44,6 +45,7 @@ const CardForm: React.FC<CardFormProps> = ({
 }) => {
   const dispatch = useDispatch();
 
+  //initialValues to be with selectedCard values in case an existing card is selected, empty in case new card will be created.
   const initialValues: CardFormik = {
     title: selectedCard ? selectedCard.title : "",
     description: selectedCard ? selectedCard.description : "",
@@ -65,7 +67,7 @@ const CardForm: React.FC<CardFormProps> = ({
             <Formik
               initialValues={initialValues}
               validationSchema={CardSchema}
-              onSubmit={(values, actions) => {
+              onSubmit={(values, actions) => { //editCard is called in case an existing card is selected, addCard in case new card will be created.
                 dispatch(
                   selectedCard
                     ? reducers.editCard({

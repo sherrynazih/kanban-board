@@ -11,7 +11,6 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import PeopleIcon from "@mui/icons-material/People";
 import StatusFullColumn from "../boardItems/StatusFullColumn";
 import { ColumnsStatusesContext } from "../contexts/ColumnsStatuses";
-import { useTheme } from "@mui/material/styles";
 
 const NAVIGATION: Navigation = [
   {
@@ -19,12 +18,12 @@ const NAVIGATION: Navigation = [
     title: "Main items",
   },
   {
-    segment: "dashboard",
+    segment: "dashboard", //This is the only thing used right now
     title: "Dashboard",
     icon: <DashboardIcon />,
   },
   {
-    segment: "tasks",
+    segment: "tasks", //Empty for now, not used
     title: "Tasks",
     icon: <FormatListBulletedIcon />,
   },
@@ -32,22 +31,23 @@ const NAVIGATION: Navigation = [
     kind: "divider",
   },
   {
-    segment: "users",
+    segment: "users", //Empty for now, not used
     title: "Users",
     icon: <PeopleIcon />,
   },
   {
-    segment: "settings",
+    segment: "settings", //Empty for now, not used
     title: "Settings",
     icon: <SettingsIcon />,
   },
   {
-    segment: "help",
+    segment: "help", //Empty for now, not used
     title: "Help & Support",
     icon: <HelpIcon />,
   },
 ];
 
+//This is mainly from Material UI to enable dark/light theme and also responsible on making the website responsive
 const demoTheme = extendTheme({
   colorSchemes: { light: true, dark: true },
   colorSchemeSelector: "class",
@@ -62,6 +62,7 @@ const demoTheme = extendTheme({
   },
 });
 
+//Not used right now as we have only one page
 function useDemoRouter(initialPath: string): Router {
   const [pathname, setPathname] = React.useState(initialPath);
 
@@ -79,11 +80,7 @@ function useDemoRouter(initialPath: string): Router {
 export default function DashboardLayoutBasic() {
   const router = useDemoRouter("/dashboard");
 
-  const theme = useTheme();
-
-  console.info("theme", theme);
-
-  const statuses = React.useContext(ColumnsStatusesContext);
+  const statuses = React.useContext(ColumnsStatusesContext); //Accessed statuses used in the created context.
 
   return (
     <AppProvider
@@ -105,6 +102,7 @@ export default function DashboardLayoutBasic() {
         <PageContainer title="Kanban Board">
           <Grid container spacing={3}>
             {statuses?.columnsStatuses.map((s, si) => (
+              //size attr. is due to responsiveness of the website
               <Grid size={{ xs: 12, sm: 12, md: 6, lg: 4 }} key={`column-status-${si}`}>
                 <StatusFullColumn status={s} />
               </Grid>

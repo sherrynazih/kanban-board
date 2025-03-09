@@ -11,9 +11,12 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 const App: React.FC = () => {
   return (
     <Provider store={store}>
+      {/* PersistGate that uses persistor from Redux store to persist data into localStorage */}
       <PersistGate loading={<div>loading...</div>} persistor={persistor}>
         <CssBaseline />
+        {/* DnD to enable drag and drop all over the website */}
         <DndProvider backend={HTML5Backend}>
+          {/* Columns statuses context created to be used anywhere */}
           <ColumnsStatusesProvider>
             <DashboardLayoutBasic />
           </ColumnsStatusesProvider>

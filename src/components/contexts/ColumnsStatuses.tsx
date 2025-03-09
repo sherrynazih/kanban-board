@@ -1,3 +1,4 @@
+//This file is related to the statuses context to be used anywhere
 import React from "react";
 
 export interface ColumnsStatus {
@@ -10,10 +11,10 @@ interface ColumnsStatusesContextType {
   columnsStatuses: ColumnsStatus[];
 }
 
-//create ColumnsStatuses context that will hold the 3 statuses "To Do", "In Progress", "Done"
+//Create ColumnsStatuses context that will hold the 3 statuses "To Do", "In Progress", "Done"
 export const ColumnsStatusesContext = React.createContext<ColumnsStatusesContextType | undefined>(undefined);
 
-//columnsStatuses provider
+//ColumnsStatuses provider
 export const ColumnsStatusesProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const columnsStatuses = [
     { name: "To Do", color: "#f59e0b" },

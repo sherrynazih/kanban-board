@@ -14,6 +14,7 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
+//Three persistConfigs instead of the root because of the presence of reducers. Combine reducers can be used but in more complicated cases.
 const dashboardPersistConfig = {
   key: "dashboard",
   version: 1,
@@ -32,17 +33,19 @@ const userPersistConfig = {
   storage,
 };
 
+//Use persistReducer to save all changes in Redux store inside localStorage.
 const persistedDashboardReducer = persistReducer(dashboardPersistConfig, dashboardReducer);
 const persistedCardReducer = persistReducer(cardPersistConfig, cardReducer);
 const persistedUserReducer = persistReducer(userPersistConfig, userReducer);
 
+//Configuring redux store with 3 reducers.
 export const store = configureStore({
   reducer: {
     dashboard: persistedDashboardReducer,
     card: persistedCardReducer,
     user: persistedUserReducer,
   },
-  //related to storing redux store into localStorage
+  //Related to storing redux store into localStorage
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
